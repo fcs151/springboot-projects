@@ -14,16 +14,26 @@ import com.fcs151.springboottareas.entities.Worker;
 import com.fcs151.springboottareas.services.IssueService;
 
 @RestController
-public class CourseController {
+public class IssueController {
 
     // marca que necesita el servicio como dependencia (lo inyecta)
     // spring crea la instancia y ve q clases necesitan la inyeccion de esa dependencia
     @Autowired
     private IssueService issueService;
-
+    
+    @RequestMapping("/issues")
+    public List<Issue> getAllIssues() {
+        return issueService.getAllIssues();
+    }
+    
+    /**
+     * Get all worker's Issues
+     * @param workerId worker's id
+     * @return list of worker's issues
+     */
     @RequestMapping("/workers/{workerId}/issues")
-    public List<Issue> getAllIssues(@PathVariable int workerId) {
-        return issueService.getAllIssues(workerId);
+    public List<Issue> getIssuesByWorkerId(@PathVariable int workerId) {
+        return issueService.getIssuesByWorker(workerId);
     }
 
     @RequestMapping("/workers/{workerId}/issues/{id}")
@@ -33,13 +43,13 @@ public class CourseController {
 
     @RequestMapping(method=RequestMethod.POST, value="/workers/{workerId}/issues")
     public void addCourse(@RequestBody Issue issue, @PathVariable int workerId) {
-        issue.setWorker(new Worker(workerId));
+        issue.setResponsible(new Worker(workerId));
         issueService.addIssue(issue);;
     }
     
     @RequestMapping(method=RequestMethod.PUT, value="/workers/{workerId}/issues/{id}")
     public void updateCourse(@RequestBody Issue issue, @PathVariable int workerId, @PathVariable int id) {
-        issue.setWorker(new Worker(workerId));
+        issue.setResponsible(new Worker(workerId));
         issueService.updateIssue(issue);;
     }
     

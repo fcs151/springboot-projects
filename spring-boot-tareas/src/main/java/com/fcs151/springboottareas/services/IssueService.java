@@ -15,9 +15,13 @@ public class IssueService {
     @Autowired
     private IssueRepository issueRepository;
     
-    public List<Issue> getAllIssues(int workerId){
+    public List<Issue> getAllIssues() {
+        return issueRepository.findAll();
+    }
+    
+    public List<Issue> getIssuesByWorker(int workerId){
         List<Issue> issues = new ArrayList<>();
-        issueRepository.findByWorkerId(workerId).forEach(issues::add);
+        issueRepository.findByResponsibleId(workerId).forEach(issues::add);
         return issues;
     }
     

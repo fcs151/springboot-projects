@@ -1,6 +1,8 @@
 package com.fcs151.springboottareas.entities;
 
-import java.sql.Date;
+import org.joda.time.DateTime;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Issue {
+public class Issue implements Serializable {
+
+    private static final long serialVersionUID = -3900416629643035122L;
 
     @Id
     @GeneratedValue
@@ -20,9 +24,12 @@ public class Issue {
     @Column(name = "name")
     private String name;
     
+    @Column(name = "description")
+    private String description;
+    
     @ManyToOne
     @JoinColumn(name = "responsible")
-    private Worker worker;
+    private Worker responsible;
     
     @ManyToOne
     @JoinColumn(name = "state_id")
@@ -31,11 +38,11 @@ public class Issue {
     @Column(name = "enabled")
     private int enabled;
     
-    @Column(name = "createdAt")
-    private Date createdAt;
+    @Column(name = "created_at")
+    private DateTime createdAt;
     
-    @Column(name = "updatedAt")
-    private Date updatedAt;
+    @Column(name = "updated_at")
+    private DateTime updatedAt;
     
     public Issue() {
     }
@@ -55,13 +62,21 @@ public class Issue {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Worker getWorker() {
-        return worker;
+    
+    public String getDescription() {
+        return description;
     }
 
-    public void setWorker(Worker worker) {
-        this.worker = worker;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Worker getResponsible() {
+        return responsible;
+    }
+
+    public void setResponsible(Worker worker) {
+        this.responsible = worker;
     }
 
     public State getState() {
@@ -80,19 +95,19 @@ public class Issue {
         this.enabled = enabled;
     }
 
-    public Date getCreatedAt() {
+    public DateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(DateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public DateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(DateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
