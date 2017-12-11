@@ -1,6 +1,6 @@
 package com.fcs151.springboottareas.entities;
 
-import org.joda.time.DateTime;
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
 
@@ -10,14 +10,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
+import lombok.Data;
+
+@Data
 @Entity
-public class Issue implements Serializable {
+@DynamicUpdate
+@Table(name = "issue")
+public class Issue extends BaseEntity implements Serializable{
 
-    private static final long serialVersionUID = -3900416629643035122L;
+    private static final long serialVersionUID = -3257712986220091681L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
     private Integer id;
     
@@ -37,79 +45,4 @@ public class Issue implements Serializable {
     
     @Column(name = "enabled")
     private int enabled;
-    
-    @Column(name = "created_at")
-    private DateTime createdAt;
-    
-    @Column(name = "updated_at")
-    private DateTime updatedAt;
-    
-    public Issue() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Worker getResponsible() {
-        return responsible;
-    }
-
-    public void setResponsible(Worker worker) {
-        this.responsible = worker;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
-    }
-
-    public int getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(int enabled) {
-        this.enabled = enabled;
-    }
-
-    public DateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(DateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public DateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(DateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    
 }
