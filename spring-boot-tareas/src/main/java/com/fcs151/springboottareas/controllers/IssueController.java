@@ -21,6 +21,10 @@ public class IssueController {
     @Autowired
     private IssueService issueService;
     
+    /**
+     * Get all issues.
+     * @return list of all the issues
+     */
     @RequestMapping("/issues")
     public List<Issue> getAllIssues() {
         return issueService.getAllIssues();
@@ -36,13 +40,23 @@ public class IssueController {
         return issueService.getIssuesByWorker(workerId);
     }
 
-    @RequestMapping("/workers/{workerId}/issues/{id}")
+    /**
+     * Get one specific issue.
+     * @param id identifier of the issue.
+     * @return the issue.
+     */
+    @RequestMapping("/issues/{id}")
     public Issue getCourse(@PathVariable int id) {
         return issueService.getIssue(id);
     }
 
+    /**
+     * Add a new worker's issue.
+     * @param issue
+     * @param workerId
+     */
     @RequestMapping(method=RequestMethod.POST, value="/workers/{workerId}/issues")
-    public void addCourse(@RequestBody Issue issue, @PathVariable int workerId) {
+    public void addIssue(@RequestBody Issue issue, @PathVariable int workerId) {
         issue.setResponsible(new Worker(workerId));
         issueService.addIssue(issue);;
     }

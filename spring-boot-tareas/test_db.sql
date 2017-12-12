@@ -17,3 +17,10 @@ set responsible = 2
 where id = 2;
 commit;
 
+UPDATE `test`.`issue` SET `created_at`= NOW() WHERE `id`='1';
+UPDATE `test`.`issue` SET `created_at`= NOW() WHERE `id`='2';
+
+ALTER TABLE issue DROP COLUMN createdAt;
+ALTER TABLE issue DROP COLUMN updatedAt;
+
+ALTER TABLE issue MODIFY updated_at timestamp;

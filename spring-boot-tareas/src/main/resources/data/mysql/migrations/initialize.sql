@@ -35,8 +35,8 @@ CREATE TABLE Issue (
 	responsible int(11) NOT NULL,
 	state_id int(11) NOT NULL DEFAULT 1,
 	enabled TINYINT NOT NULL DEFAULT 1,
-    createdAt datetime NOT NULL,
-    updatedAt datetime DEFAULT NULL,
+    createdAt timestamp NOT NULL,
+    updatedAt timestamp DEFAULT NULL,
 	PRIMARY KEY (id),
     CONSTRAINT FK_Worker FOREIGN KEY (responsible) REFERENCES Worker (id),
     CONSTRAINT FK_State FOREIGN KEY (state_id) REFERENCES State (id)

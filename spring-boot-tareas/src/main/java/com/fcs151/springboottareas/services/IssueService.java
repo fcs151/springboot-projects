@@ -29,12 +29,12 @@ public class IssueService {
         return issueRepository.findOne(id);
     }
 
-    public void addIssue(Issue course) {
-        issueRepository.save(course);
+    public void addIssue(Issue issue) {
+        issueRepository.save(issue);
     }
 
-    public void updateIssue(Issue course) {
-        issueRepository.save(course);
+    public void updateIssue(Issue issue) {
+        issueRepository.save(issue);
     }
 
     public void deleteIssue(int id) {
