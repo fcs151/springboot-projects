@@ -58,17 +58,27 @@ public class IssueController {
     @RequestMapping(method=RequestMethod.POST, value="/workers/{workerId}/issues")
     public void addIssue(@RequestBody Issue issue, @PathVariable int workerId) {
         issue.setResponsible(new Worker(workerId));
-        issueService.addIssue(issue);;
+        issueService.addIssue(issue);
     }
     
-    @RequestMapping(method=RequestMethod.PUT, value="/workers/{workerId}/issues/{id}")
-    public void updateCourse(@RequestBody Issue issue, @PathVariable int workerId, @PathVariable int id) {
-        issue.setResponsible(new Worker(workerId));
-        issueService.updateIssue(issue);;
+    /**
+     * Update an issue
+     * @param issue in the RequestBody
+     * @param workerId issue's responsible
+     * @param id id of the issue
+     */
+    @RequestMapping(method=RequestMethod.PUT, value="/issues/{id}")
+    public void updateIssue(@RequestBody Issue issue, @PathVariable int id) {
+        issue.setId(id);
+        issueService.updateIssue(issue);
     }
     
-    @RequestMapping(method=RequestMethod.DELETE, value="/topics/{topicId}/courses/{id}")
-    public void deleteTopic(@PathVariable int id) {
+    /**
+     * Delete an issue.
+     * @param id
+     */
+    @RequestMapping(method=RequestMethod.DELETE, value="/issues/{id}")
+    public void deleteIssue(@PathVariable int id) {
         issueService.deleteIssue(id);
     }
 }
