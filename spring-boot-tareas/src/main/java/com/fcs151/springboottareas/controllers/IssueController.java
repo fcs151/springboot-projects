@@ -16,8 +16,6 @@ import com.fcs151.springboottareas.services.IssueService;
 @RestController
 public class IssueController {
 
-    // marca que necesita el servicio como dependencia (lo inyecta)
-    // spring crea la instancia y ve q clases necesitan la inyeccion de esa dependencia
     @Autowired
     private IssueService issueService;
     

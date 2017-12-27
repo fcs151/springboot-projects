@@ -8,4 +8,6 @@ import com.fcs151.springboottareas.entities.Issue;
 
 public interface IssueRepository extends JpaRepository<Issue, Integer> {
     public List<Issue> findByResponsibleId(Integer workerId);
+
+    public Issue findByName(String name);
 }
