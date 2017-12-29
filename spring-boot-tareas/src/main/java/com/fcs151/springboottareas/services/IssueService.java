@@ -38,7 +38,9 @@ public class IssueService {
     }
 
     public void deleteIssue(int id) {
-        issueRepository.delete(id);
+        Issue issue = getIssue(id);
+        issue.setEnabled(0);
+        issueRepository.save(issue);
     }
     
 }
