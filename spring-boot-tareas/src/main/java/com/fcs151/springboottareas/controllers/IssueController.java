@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fcs151.springboottareas.entities.Issue;
 import com.fcs151.springboottareas.entities.Worker;
+import com.fcs151.springboottareas.exceptions.ParameterException;
 import com.fcs151.springboottareas.services.IssueService;
 
 @RestController
@@ -77,6 +78,7 @@ public class IssueController {
      */
     @RequestMapping(method=RequestMethod.DELETE, value="/issues/{id}")
     public void deleteIssue(@PathVariable int id) {
-        issueService.deleteIssue(id);
+        //issueService.deleteIssue(id);
+        throw new ParameterException("DELETE ISSUE. Bad Parameter: " + id);
     }
 }
