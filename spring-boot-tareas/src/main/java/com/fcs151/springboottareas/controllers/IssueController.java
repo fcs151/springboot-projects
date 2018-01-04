@@ -2,6 +2,7 @@ package com.fcs151.springboottareas.controllers;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,12 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fcs151.springboottareas.entities.Issue;
 import com.fcs151.springboottareas.entities.Worker;
-import com.fcs151.springboottareas.exceptions.ParameterException;
+import com.fcs151.springboottareas.exceptions.IssueDoesNotExistException;
+import com.fcs151.springboottareas.exceptions.WorkerDoesNotExistException;
 import com.fcs151.springboottareas.services.IssueService;
 
 @RestController
 public class IssueController {
 
+    private static final Logger logger = Logger.getLogger(IssueController.class);
+    
     @Autowired
     private IssueService issueService;
     
@@ -45,8 +49,13 @@ public class IssueController {
      * @return the issue.
      */
     @RequestMapping("/issues/{id}")
-    public Issue getCourse(@PathVariable int id) {
-        return issueService.getIssue(id);
+    public Issue getIssue(@PathVariable int id) {
+        Issue issue = issueService.getIssue(id);
+        if (issue!=null) return issue;
+        else {
+            logger.info("Issue doesn't exist. Id: " + id);
+            throw new IssueDoesNotExistException(id);
+        }
     }
 
     /**
@@ -65,11 +74,16 @@ public class IssueController {
      * @param issue in the RequestBody
      * @param workerId issue's responsible
      * @param id id of the issue
+     * @throws Exception 
      */
     @RequestMapping(method=RequestMethod.PUT, value="/issues/{id}")
-    public void updateIssue(@RequestBody Issue issue, @PathVariable int id) {
+    public void updateIssue(@RequestBody Issue issue, @PathVariable int id) throws Exception {
         issue.setId(id);
-        issueService.updateIssue(issue);
+        if (issueService.getIssue(id)!=null) issueService.updateIssue(issue);
+        else {
+            logger.info("Issue doesn't exist. Id: " + id);
+            throw new IssueDoesNotExistException(id);
+        }
     }
     
     /**
@@ -78,7 +92,26 @@ public class IssueController {
      */
     @RequestMapping(method=RequestMethod.DELETE, value="/issues/{id}")
     public void deleteIssue(@PathVariable int id) {
-        //issueService.deleteIssue(id);
-        throw new ParameterException("DELETE ISSUE. Bad Parameter: " + id);
+        if (issueService.getIssue(id)!=null) issueService.deleteIssue(id);
+        else {
+            logger.info("Issue doesn't exist. Id: " + id);
+            throw new IssueDoesNotExistException(id);
+        }
     }
+    
+    /**
+     * Get one specific worker.
+     * @param id identifier of the issue.
+     * @return the issue.
+     */
+    @RequestMapping("/workers/{id}")
+    public Worker getWorker(@PathVariable int id) {
+        Worker worker = issueService.getWorker(id);
+        if (worker!=null) return worker;
+        else {
+            logger.info("Worker doesn't exist. Id: " + id);
+            throw new WorkerDoesNotExistException(id);
+        }
+    }
+
 }

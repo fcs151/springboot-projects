@@ -7,13 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fcs151.springboottareas.entities.Issue;
+import com.fcs151.springboottareas.entities.Worker;
 import com.fcs151.springboottareas.repositories.IssueRepository;
+import com.fcs151.springboottareas.repositories.WorkerRepository;
 
 @Service
 public class IssueService {
     
     @Autowired
     private IssueRepository issueRepository;
+    
+    @Autowired
+    private WorkerRepository workerRepository;
     
     public List<Issue> getAllIssues() {
         return issueRepository.findAll();
@@ -41,6 +46,10 @@ public class IssueService {
         Issue issue = getIssue(id);
         issue.setEnabled(0);
         issueRepository.save(issue);
+    }
+    
+    public Worker getWorker(int id) {
+        return workerRepository.findOne(id);
     }
     
 }
