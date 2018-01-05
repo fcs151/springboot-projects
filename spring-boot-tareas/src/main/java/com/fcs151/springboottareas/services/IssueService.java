@@ -1,5 +1,7 @@
 package com.fcs151.springboottareas.services;
 
+import static com.fcs151.springboottareas.utils.Utils.getFormatDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,11 @@ public class IssueService {
     private WorkerRepository workerRepository;
     
     public List<Issue> getAllIssues() {
-        return issueRepository.findAll();
+        List<Issue> issues = issueRepository.findAll();
+        for (Issue issue : issues) {
+            issue.setCreatedAtFormatted(getFormatDate(issue.getCreatedAt()));
+        }
+        return issues;
     }
     
     public List<Issue> getIssuesByWorker(int workerId){

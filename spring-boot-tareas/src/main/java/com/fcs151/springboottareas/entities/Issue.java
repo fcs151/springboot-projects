@@ -45,4 +45,6 @@ public class Issue extends BaseEntity implements Serializable{
     
     @Column(name = "enabled")
     private int enabled;
+    
+    private String createdAtFormatted;
 }
